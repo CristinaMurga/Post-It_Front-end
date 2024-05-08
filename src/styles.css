@@ -1,0 +1,27 @@
+.post-it{
+   
+    background-color: #F6F794;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.post-it>h2{
+    margin: 40px 20px 10px 20px;
+    font-size: 35px;
+}
+.postItbtn{
+    margin:  10px 20px 30px 25px;
+    width: 23%;
+    border: none;
+    text-align: center;
+    height: 38px ;
+    font-size: 22px;
+    background-color: #FF2764;
+    color: white;
+}
+
+
+@media only screen and (max-width: 991px) 
+{
+    .post-it>button{
+        font-size: 18px;
+    }
+}
