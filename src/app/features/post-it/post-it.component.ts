@@ -12,27 +12,24 @@ import { CommonModule } from '@angular/common';
   providers: [PostItService]
 })
 export class PostItComponent {
-
-  postItsList: PostIt[] = [];
-
   constructor(private ws: PostItService){}
 
   ngOnInit(){
-    this.getPostIts()
+    this.getPostIts();
   }
-
-
-  getPostIts(){
-    this.ws.GetPostIts().subscribe({
-      next:(data:PostIt[]) => {
-        console.log(data)
-        this.postItsList = data;
-        console.log(this.postItsList);
-        
-      },
-      error: (err: any) => {
-        console.log(err);
-      }
-    })
-  }
+  
+   postItsList: PostIt[]=[]
+  
+    getPostIts(){
+      this.ws.GetPostIts().subscribe({
+        next: (data: PostIt[]) => {
+          this.postItsList = data;
+          console.log("ok")
+          console.log(data)
+        },
+        error: (err: any) => {
+          console.log(err);
+        }
+      })
+    }
 }

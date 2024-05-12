@@ -1,5 +1,4 @@
 .post-it{
-   
     background-color: #F6F794;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
@@ -18,6 +17,9 @@
     color: white;
 }
 
+a{
+    color: black;
+}
 
 @media only screen and (max-width: 991px) 
 {
