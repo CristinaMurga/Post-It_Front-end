@@ -1,0 +1,25 @@
+.post-itCustom{
+    width: 300px;
+}
+.btnBox{
+    display: flex;
+    justify-content: end;
+}
+button{
+    background-color: transparent;
+    border: none;
+}
+
+textarea{
+width: 100%;
+border: none;
+}
+.colorbox {
+    height: 20px;
+    width: 20px;
+    margin: 5px 0 0 5px;
+}
+
+li{
+    display: flex;
+}

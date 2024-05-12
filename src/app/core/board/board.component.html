@@ -1,11 +1,33 @@
+<main class="bg1 vh-100">
+  <div>
+    <button class="">Add new Post-it</button>
+  </div>
 
-  <main class="bg1 vh-100">
-    <div>   
-        <button class="">Add new Post-it</button>
-    </div>
-     
+  <div class="vh-100">
     <div>
-    <app-post-it *ngFor="let post_it of postItsList"></app-post-it>
+      <div *ngFor="let postIt of postItsList" class="post-it post-itCustom" [ngStyle]="{'background-color': postIt.color}">
+        <div class="btnBox">
+          <!-- Example single danger button -->
+          <div class="btn-group">
+            <button type="button" data-bs-toggle="dropdown"
+              aria-expanded="false" (click)="getColors()">
+              <i class="bi bi-three-dots"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li *ngFor="let color of colorlist"><p class="colorbox" [ngStyle]="{'background-color':color.hexadecimal}"></p> <button (click)="editPostItColor(color.hexadecimal,postIt)">{{color.name}}</button></li>
+            </ul>
+          </div>
+          <button (click)="DeletePostIt(postIt.id)"><i class="bi bi-trash-fill"></i></button>
+        </div>
+        <div>
+          <form action="">
+            <textarea   [ngStyle]="{'background-color': postIt.color}" name="" id="" #body (input)="editPostItBody(body.value,postIt)">   {{postIt.body}} </textarea>
+          </form>
+        </div>
+
+      </div>
     </div>
-    
-  </main>
+
+  </div>
+
+</main>
