@@ -15,19 +15,22 @@ import { CdkDrag, CdkDragEnd ,} from '@angular/cdk/drag-drop'
   providers: [PostItService]
 })
 export class BoardComponent {
-  constructor(private ws: PostItService){}
-
-  ngOnInit(){
-    this.getPostIts();
-  }
 
   color: Color = new  Color();
   colorlist: Color[]=[];
   postItsList: PostIt[]=[];
   postItNew : PostIt = new PostIt()
+  username :any = sessionStorage.getItem('userName');
+
+  constructor(private ws: PostItService){}
  
-  getPostIts(){
-    this.ws.GetPostIts().subscribe({
+  ngOnInit(){
+    this.getPostIts(this.username);
+  }
+
+  //metodo per prendere tutti i post-It in DB per utente
+  getPostIts(user:any){    
+    this.ws.GetPostIts(user).subscribe({
       next: (data: PostIt[]) => {
         this.postItsList = data;
       },
@@ -36,28 +39,28 @@ export class BoardComponent {
       }
     })
   }
+  //metodo per creare nuovi post-it
   newPostIt(){
-    this.postItNew.userID = 1;
+    this.postItNew.username = this.username.toString();
     this.postItNew.body ='';
     this.postItNew.color= '#F6F794';
     this.postItNew.id= 0;
     this.positionX= 0;
     this.positionY= 0;
 
-  
    this.ws.NewPostIt(this.postItNew).subscribe({
     next: (resp:any) => {
-      this.getPostIts();
+      this.getPostIts(this.username);
     },
     error: (err: any) => {
-      console.log(err);
+      this.getPostIts(this.username);
     }
    })
 
   }
 
 
-  //modifare il colore del post It
+  //modifare il colore del post-It
   editPostItColor(colorHexadecimal: string, postIt:PostIt){
     postIt.color= colorHexadecimal
     this.ws.EditPostIt(postIt.id,postIt).subscribe({
@@ -70,7 +73,7 @@ export class BoardComponent {
     })
   } 
 
-  //modifare il texto del post It
+  //modifare il texto del post-It
   editPostItBody(body:string, postIt:PostIt){
     postIt.body= body
     this.ws.EditPostIt(postIt.id,postIt).subscribe({
@@ -82,11 +85,11 @@ export class BoardComponent {
       }
     })
   } 
-//elimina il post It
+//elimina il post-It
   DeletePostIt(id: number) {
     this.ws.DeletePostIt(id).subscribe({
       next: (data: any) =>{
-        this.getPostIts();
+        this.getPostIts(this.username);
       },
       error: (err: any) => {
         console.log(err)
@@ -105,16 +108,18 @@ export class BoardComponent {
     })
   }
 
+  // salvo posizione del post-It alla fine del drag and drop
   positionX: number = 0;
   positionY: number = 0;
+
   dragEnded($event : CdkDragEnd, postIt:PostIt){
+  //salvo i dati nativi dell'evento dragEnded
     const {offsetLeft,offsetTop}= $event.source.element.nativeElement;
     const {x,y} = $event.distance;
-    this.positionX = offsetLeft + x;
-    this.positionY = offsetTop + y;
-   console.log(this.positionX, this.positionY)
-    postIt.positionLeftX = this.positionX;
-    postIt.positionTopY= this.positionY;
+
+    //valorizzo le propieta position del oggetto Post-it con la posizione attuale
+    postIt.positionLeftX = offsetLeft + x;
+    postIt.positionTopY= offsetTop + y;
     console.log('dragend',postIt);
     this.ws.EditPostIt(postIt.id,postIt).subscribe({
       next: (resp: any) => {

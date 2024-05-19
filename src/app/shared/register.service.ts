@@ -12,4 +12,7 @@ export class RegisterService {
   PostCustomer(user: User): Observable <any>{
     return this.http.post('https://localhost:7045/api/Users', user);
   }
+  getIfUserExist (user:string){
+    return this.http.get(`https://localhost:7045/api/Users/${user}`);
+  }
 }

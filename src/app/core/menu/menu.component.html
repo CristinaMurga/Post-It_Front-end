@@ -2,6 +2,6 @@
 <nav class="navbar menu">
     <div class="container-fluid">
       <span class="navbar-brand mb-0 h1 menu">Post-it!</span>
-      <button *ngIf="false" class="ms-3">Log out</button>
+      <button *ngIf="this.login.isLoggedIn" (click)="this.login.logOut()" class="ms-3 logOut">Log out</button>
     </div>
   </nav>
